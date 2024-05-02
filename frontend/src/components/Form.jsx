@@ -3,25 +3,30 @@ import api from "../api";
 import { useNavigate } from "react-router-dom";
 import { ACCESS_TOKEN, REFRESH_TOKEN } from "../constants";
 import "../styles/Form.css"
+import LoadingIndicator from "./LoadingIndicator";
+import HideableLink from "./HideableLink";
 
 
 function Form({route, method}){
-    const [username, setUsername] = useState('')
-    const [password, setPassword] = useState("")
-    const [loading, setLoading] = useState(false)
-    const navigate = useNavigate()
+    const [username, setUsername] = useState('');
+    const [password, setPassword] = useState("");
+    const [loading, setLoading] = useState(false);
+    const [regLink, setRegLink ] = useState(false)
+    const navigate = useNavigate();
 
-    const name = method === "login" ? "Login" : "Register"
+    const name = method === "login" ? "Login" : "Register";
 
     const handleSubmit = async (e) => {
-        setLoading(true)
-        e.preventDefault() // remove the default action of form; stop from form from submitting; prevents the page from reloading
+        setLoading(true);
+        regLink(true)
+        e.preventDefault() ;// remove the default action of form; stop from form from submitting; prevents the page from reloading
         try{
             const response = await api.post(route, { username, password })
             if (method == "login"){
                 // if the method is login set the access and refresh token from the api
-                localStorage.setItem(ACCESS_TOKEN, response.data.access)
-                localStorage.setItem(REFRESH_TOKEN, response.data.refresh)
+                localStorage.setItem(ACCESS_TOKEN, response.data.access);
+                localStorage.setItem(REFRESH_TOKEN, response.data.refresh);
+
                 navigate("/")
             } else {
                 navigate("/login")
@@ -51,9 +56,13 @@ function Form({route, method}){
             onChange={(e) => setPassword(e.target.value)} //get username where the event occurred
             placeholder="Password"
         />
+        {loading && <LoadingIndicator /> }
         <button className="form-button" type="submit">
             {name}
         </button>
+        <br />
+       <HideableLink to="/register">Register Here</HideableLink>
+
     </form>
 }
 export default Form

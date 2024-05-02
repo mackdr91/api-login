@@ -1,0 +1,19 @@
+.loading-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.loader {
+    border: 8px solid #f3f4f6; /* Light grey border */
+    border-top: 8px solid #3498db; /* Blue color for the loader */
+    border-radius: 50%; /* Make it round */
+    width: 60px; /* Width of the loader */
+    height: 60px; /* Height of the loader */
+    animation: spin 2s linear infinite; /* Spinning animation */
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
