@@ -11,14 +11,13 @@ function Form({route, method}){
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState("");
     const [loading, setLoading] = useState(false);
-    const [regLink, setRegLink ] = useState(false)
     const navigate = useNavigate();
 
     const name = method === "login" ? "Login" : "Register";
 
     const handleSubmit = async (e) => {
         setLoading(true);
-        regLink(true)
+       
         e.preventDefault() ;// remove the default action of form; stop from form from submitting; prevents the page from reloading
         try{
             const response = await api.post(route, { username, password })
@@ -61,7 +60,7 @@ function Form({route, method}){
             {name}
         </button>
         <br />
-       <HideableLink to="/register">Register Here</HideableLink>
+      
 
     </form>
 }
